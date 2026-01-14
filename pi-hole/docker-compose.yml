@@ -1,0 +1,31 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    hostname: pihole
+    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: "America/Sao_Paulo"
+      FTLCONF_webserver_api_password: "${PIHOLE_WEBPASSWORD}"
+      FTLCONF_dns_listeningMode: "ALL"
+      FTLCONF_IPV6: "false"
+    volumes:
+      - "./etc-pihole:/etc/pihole"
+    depends_on:
+      - unbound
+    cap_add:
+      - NET_ADMIN
+
+  unbound:
+    container_name: unbound
+    image: ghcr.io/klutchell/unbound:latest
+    restart: unless-stopped
+    volumes:
+      - "./unbound:/etc/unbound"
+    ports:
+      - "5335:5335/tcp"
+      - "5335:5335/udp"
