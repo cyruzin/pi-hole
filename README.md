@@ -6,11 +6,15 @@
 
 Optimized configuration to run **Pi-hole** as a network-wide ad blocker and **Unbound** as a local recursive DNS resolver, enhancing both privacy and performance.
 
----
-
 ## Getting Started
 
-Ensure you are in the directory containing your `docker-compose.yml` file and run:
+1. Set your admin password in the existing environment file at `pi-hole/.env`:
+   
+```env
+PIHOLE_WEBPASSWORD=your_secure_password_here
+```
+
+2. Ensure you are in the directory containing your `docker-compose.yml` file and run:
 
 ```bash
 docker compose up -d
